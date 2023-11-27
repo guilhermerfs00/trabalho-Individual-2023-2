@@ -43,5 +43,5 @@ tomli==2.0.1
 toolz==0.12.0
 tqdm==4.64.1
 urllib3==1.26.13
-whatlies==0.7.0
+whatlies
 zipp==3.11.0
