@@ -1,0 +1,50 @@
+version: '3.7'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    environment: 
+      MONGO_INITDB_ROOT_USERNAME: lappis
+      MONGO_INITDB_ROOT_PASSWORD: lappis
+    ports: 
+      - 27017:27017
+
+  app:
+    image: app:final
+    build:
+      context: src
+      dockerfile: dockerfile
+    command: ["python", "main.py"]
+    ports:
+      - 8000:8000
+    depends_on:
+      - mongo
+
+  postgressDB:
+    image: postgres:latest
+    container_name: metabase
+    restart: always
+    environment:
+            POSTGRES_DB: metabase
+            POSTGRES_USER: lappis
+            POSTGRES_PASSWORD: lappis
+
+  metabase:
+    image: metabase
+    container_name: metabase
+    restart: always
+    environment:
+            MB_DB_TYPE: postgres
+            MB_DB_DBNAME: metabase
+            MB_DB_PORT: 5432
+            MB_DB_USER: lappis
+            MB_DB_PASS: lappis
+            MB_DB_HOST: postgressDB
+    depends_on:
+            - postgressDB
+    volumes:
+            - .:/metabase
+    ports:
+            - 3000:3000
