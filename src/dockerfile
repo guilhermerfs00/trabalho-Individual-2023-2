@@ -2,9 +2,9 @@ FROM python:3.8
 
 WORKDIR /app
 
-COPY ../../Trabalho-Individual-2022-2--Ricardo/src/requirements.txt .
+COPY requirements.txt .
 
-COPY ../../Trabalho-Individual-2022-2--Ricardo/src .
+COPY . .
 
 EXPOSE 8000
 
